@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 100);
   }
 
-  // Formulario de contacto (Netlify Forms, envío por AJAX sin recargar la página)
+  // Formulario de contacto (Formspree, envío por AJAX sin recargar la página)
   var contactForm = document.getElementById("contactForm");
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
@@ -30,12 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Enviando..."; }
 
       var data = new FormData(contactForm);
-      fetch("/", {
+      fetch(contactForm.action, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data).toString()
+        headers: { "Accept": "application/json" },
+        body: data
       })
-        .then(function () {
+        .then(function (response) {
+          if (!response.ok) throw new Error("request-failed");
           contactForm.style.display = "none";
           var note = document.getElementById("formNote");
           if (note) { note.style.display = "none"; }
