@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto | Pujante Manzano Abogado</title>
+<meta name="description" content="Contacta con Pujante Manzano Abogado en Murcia. Email, teléfono y WhatsApp.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a>
+    <a href="tel:+34666444493">666 44 44 93</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <img src="images/logo.png" alt="PM Abogado" class="brand-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="conoceme.html">Sobre el Despacho</a></li>
+        <li><a href="contacto.html" class="active">Contacto</a></li>
+        <li><a href="herramientas.html">Herramientas</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding: 60px 0 70px;">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="videos/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container" style="position: relative; z-index: 2;">
+    <span class="eyebrow">Contacto</span>
+    <h1>Hablemos de su caso</h1>
+    <p class="lead">Estamos aquí para escucharle, asesorarle y encontrar la mejor solución jurídica.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container contact-grid">
+
+    <div>
+      <div class="contact-item">
+        <div class="icon">&#9993;</div>
+        <div>
+          <h4>Correo electrónico</h4>
+          <p><a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon">&#9742;</div>
+        <div>
+          <h4>Teléfono y WhatsApp</h4>
+          <p><a href="tel:+34666444493">666 44 44 93</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon">&#128197;</div>
+        <div>
+          <h4>Cita previa</h4>
+          <p>Para cualquier consulta pida cita y hora.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon">&#128196;</div>
+        <div>
+          <h4>Antes de tu cita</h4>
+          <p>Recomendable traer copia de toda la documentación para agilizar la consulta.</p>
+        </div>
+      </div>
+      <div class="contact-item" style="border-bottom: none;">
+        <div class="icon">&#128247;</div>
+        <div>
+          <h4>Instagram</h4>
+          <p><a href="https://www.instagram.com/pujantemanzano_abogado/" target="_blank" rel="noopener">@pujantemanzano_abogado</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-box">
+      <h3 style="border:none; padding:0; margin-bottom:6px;">Solicite su consulta</h3>
+      <p style="color: var(--gray-600); font-size: 0.9rem;">Rellena el formulario y me pondré en contacto contigo lo antes posible.</p>
+      <form id="contactForm" name="contacto" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="contacto">
+
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono">
+
+        <label for="area">Área de interés</label>
+        <select id="area" name="area">
+          <option>Civil</option>
+          <option>Bancario</option>
+          <option>Penal</option>
+          <option>Laboral</option>
+          <option>Social</option>
+          <option>Administrativo</option>
+          <option>Extranjería</option>
+          <option>Otro</option>
+        </select>
+
+        <label for="mensaje">Cuéntenos brevemente su caso</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+
+        <button type="submit" class="btn btn-navy">Enviar consulta</button>
+      </form>
+      <div id="formSuccess" style="display:none;">
+        <p style="color: var(--navy); font-weight: 600;">&#9989; Gracias, su consulta se ha enviado correctamente. Nos pondremos en contacto con usted lo antes posible.</p>
+      </div>
+      <p id="formNote" class="form-note">Al enviar este formulario aceptas la <a href="politica-privacidad.html">política de privacidad</a>.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <video class="footer-bg-video" autoplay muted loop playsinline>
+    <source src="videos/footer-bg.mp4" type="video/mp4">
+  </video>
+  <div class="footer-overlay"></div>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="conoceme.html">Sobre el Despacho</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="herramientas.html">Herramientas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a></li>
+          <li><a href="tel:+34666444493">666 44 44 93</a></li>
+          <li><a href="https://www.instagram.com/pujantemanzano_abogado/" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Pujante Manzano Abogado. Todos los derechos reservados.</span>
+      <span><a href="aviso-legal.html">Aviso legal</a><a href="politica-privacidad.html">Política de privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

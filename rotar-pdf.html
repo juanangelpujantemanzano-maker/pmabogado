@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotar PDF | Pujante Manzano Abogado</title>
+<meta name="description" content="Rota las páginas de un PDF, todas a la vez o una a una, gratis y en tu propio navegador.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a>
+    <a href="tel:+34666444493">666 44 44 93</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <img src="images/logo.png" alt="PM Abogado" class="brand-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="conoceme.html">Sobre el Despacho</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="herramientas.html" class="active">Herramientas</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding: 60px 0 70px;">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="videos/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container" style="position: relative; z-index: 2;">
+    <span class="eyebrow"><a href="herramientas.html" style="color: var(--gold);">Herramientas</a> · Rotar PDF</span>
+    <h1>Rotar PDF</h1>
+    <p class="lead">Gira las páginas de tu documento 90º a la vez, todas a la vez o solo las que necesites.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 900px;">
+
+    <div class="tool-box">
+      <div id="dropZone" class="tool-drop">
+        <input type="file" id="fileInput" accept="application/pdf" hidden>
+        <div class="tool-drop-icon">&#128196;</div>
+        <p class="tool-drop-text">Arrastra aquí tu PDF, o</p>
+        <button type="button" id="browseBtn" class="btn btn-navy">Seleccionar archivo</button>
+        <p class="tool-drop-note">Solo archivos .pdf.</p>
+      </div>
+
+      <div id="fileInfo" class="tool-file-info" style="display:none;">
+        <span id="fileName"></span>
+      </div>
+
+      <div id="passwordBox" class="password-prompt" style="display:none;">
+        <p class="tool-drop-note" style="text-align:left; margin:0 0 8px;">Este documento está protegido con contraseña.</p>
+        <div class="shared-password-bar">
+          <input type="password" id="passwordInput" placeholder="Contraseña del documento" autocomplete="off">
+          <button type="button" id="passwordSubmitBtn" class="btn btn-navy">Continuar</button>
+        </div>
+        <div id="passwordError" class="file-password-error" style="display:none;"></div>
+      </div>
+
+      <div id="status" class="tool-status" style="display:none;"></div>
+
+      <div id="rotateArea" style="display:none;">
+        <div class="page-grid-toolbar">
+          <span class="page-grid-note" id="pageCountNote"></span>
+          <div class="page-grid-toolbar-actions">
+            <button type="button" id="rotateAllLeftBtn" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">&#8634; Rotar todas</button>
+            <button type="button" id="rotateAllRightBtn" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">&#8635; Rotar todas</button>
+            <button type="button" id="generateBtn" class="btn btn-primary">Rotar PDF</button>
+          </div>
+        </div>
+
+        <div id="pageGrid" class="page-grid"></div>
+      </div>
+
+      <div id="resultBox" class="tool-result" style="display:none;">
+        <p>&#9989; Documento rotado correctamente.</p>
+        <a id="downloadLink" class="btn btn-primary" download>Descargar PDF rotado</a>
+        <button type="button" id="resetBtn" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">Rotar otro archivo</button>
+      </div>
+    </div>
+
+    <div class="tool-disclaimer">
+      <h4>Sobre esta herramienta</h4>
+      <p>Esta herramienta funciona <strong>íntegramente en tu navegador</strong> mediante JavaScript: el PDF no se sube a internet en ningún momento, por lo que es adecuada para documentos confidenciales. Usa los botones de cada página para rotarla 90º en cualquier sentido, o los botones superiores para rotar todas las páginas a la vez.</p>
+      <p>Si el documento está protegido con contraseña, la herramienta lo detecta automáticamente y te la pedirá antes de mostrar las páginas; el resultado final se genera sin contraseña.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <video class="footer-bg-video" autoplay muted loop playsinline>
+    <source src="videos/footer-bg.mp4" type="video/mp4">
+  </video>
+  <div class="footer-overlay"></div>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="conoceme.html">Sobre el Despacho</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="herramientas.html">Herramientas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a></li>
+          <li><a href="tel:+34666444493">666 44 44 93</a></li>
+          <li><a href="https://www.instagram.com/pujantemanzano_abogado/" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Pujante Manzano Abogado. Todos los derechos reservados.</span>
+      <span><a href="aviso-legal.html">Aviso legal</a><a href="politica-privacidad.html">Política de privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cantoo/pdf-lib@2.8.1/dist/pdf-lib.min.js"></script>
+<script src="js/script.js"></script>
+<script src="js/rotar-pdf.js"></script>
+</body>
+</html>

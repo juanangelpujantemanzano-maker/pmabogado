@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imagen a PDF | Pujante Manzano Abogado</title>
+<meta name="description" content="Convierte tus imágenes (JPG, PNG) en un documento PDF, gratis y en tu propio navegador.">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a>
+    <a href="tel:+34666444493">666 44 44 93</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <img src="images/logo.png" alt="PM Abogado" class="brand-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="conoceme.html">Sobre el Despacho</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="herramientas.html" class="active">Herramientas</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding: 60px 0 70px;">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="videos/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container" style="position: relative; z-index: 2;">
+    <span class="eyebrow"><a href="herramientas.html" style="color: var(--gold);">Herramientas</a> · Imagen a PDF</span>
+    <h1>Convertidor de imagen a PDF</h1>
+    <p class="lead">Convierte una o varias imágenes (JPG o PNG) en un único documento PDF, una imagen por página, en el orden en que las selecciones.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 760px;">
+
+    <div class="tool-box">
+      <div id="dropZone" class="tool-drop">
+        <input type="file" id="fileInput" accept="image/jpeg,image/png" multiple hidden>
+        <div class="tool-drop-icon">&#128444;</div>
+        <p class="tool-drop-text">Arrastra aquí tus imágenes, o</p>
+        <button type="button" id="browseBtn" class="btn btn-navy">Seleccionar imágenes</button>
+        <p class="tool-drop-note">Formatos admitidos: JPG y PNG. Puedes soltarlas de una en una o todas a la vez; se irán añadiendo a la lista.</p>
+      </div>
+
+      <div id="fileInfo" class="tool-file-info" style="display:none; flex-direction: column; align-items: stretch;">
+        <ul id="fileList" class="tool-file-list"></ul>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:14px;">
+          <span id="fileCount" style="font-weight:600; color:var(--navy);"></span>
+          <button type="button" id="convertBtn" class="btn btn-primary">Convertir a PDF</button>
+        </div>
+      </div>
+
+      <div id="status" class="tool-status" style="display:none;"></div>
+
+      <div id="resultBox" class="tool-result" style="display:none;">
+        <p>&#9989; Conversión completada.</p>
+        <a id="downloadLink" class="btn btn-primary" download>Descargar PDF</a>
+        <button type="button" id="resetBtn" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">Convertir otras imágenes</button>
+      </div>
+    </div>
+
+    <div class="tool-disclaimer">
+      <h4>Sobre esta herramienta</h4>
+      <p>Esta herramienta funciona <strong>íntegramente en tu navegador</strong> mediante JavaScript: tus imágenes no se suben a internet en ningún momento, por lo que es adecuada para documentos confidenciales. Cada imagen se coloca en su propia página del PDF, con el tamaño de página ajustado a las proporciones de la imagen, sin recortarla ni añadir márgenes.</p>
+      <p>Si seleccionas varias imágenes, el orden de las páginas del PDF será el mismo en el que las hayas seleccionado o arrastrado.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <video class="footer-bg-video" autoplay muted loop playsinline>
+    <source src="videos/footer-bg.mp4" type="video/mp4">
+  </video>
+  <div class="footer-overlay"></div>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="conoceme.html">Sobre el Despacho</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="herramientas.html">Herramientas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a></li>
+          <li><a href="tel:+34666444493">666 44 44 93</a></li>
+          <li><a href="https://www.instagram.com/pujantemanzano_abogado/" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Pujante Manzano Abogado. Todos los derechos reservados.</span>
+      <span><a href="aviso-legal.html">Aviso legal</a><a href="politica-privacidad.html">Política de privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="js/script.js"></script>
+<script src="js/imagen-a-pdf.js"></script>
+</body>
+</html>
