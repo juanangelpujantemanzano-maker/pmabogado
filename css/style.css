@@ -1080,6 +1080,44 @@ footer.site-footer a:hover { color: var(--gold); }
   background: var(--gray-50);
 }
 
+/* ---------- Artículos relacionados (enlazado interno) ---------- */
+.related-articles { padding: 6px 0 44px; }
+.related-articles h2 { font-size: 1.1rem; color: var(--navy); margin-bottom: 16px; }
+.related-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.related-links a {
+  flex: 1 1 220px;
+  padding: 14px 18px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  color: var(--navy);
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.related-links a:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ---------- WhatsApp flotante ---------- */
+.whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 56px;
+  height: 56px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  z-index: 998;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.32);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   nav.main-nav { position: fixed; inset: 0 0 0 30%; background: var(--white); flex-direction: column; padding: 90px 24px 24px; transform: translateX(100%); transition: transform 0.25s ease; box-shadow: -8px 0 24px rgba(0,0,0,0.15); z-index: 99; }
@@ -1091,4 +1129,5 @@ footer.site-footer a:hover { color: var(--gold); }
   .profile .photo { max-width: 280px; }
   .accordion-panel-inner ul { columns: 1; }
   .topbar .container { justify-content: center; text-align: center; }
+  .whatsapp-float { width: 50px; height: 50px; right: 16px; bottom: 16px; }
 }
