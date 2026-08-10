@@ -353,6 +353,13 @@ section.alt { background: var(--gray-50); }
   height: 6px;
   background: var(--gold);
 }
+.accordion-panel-inner li.cat-header {
+  padding-left: 0;
+  padding-top: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.accordion-panel-inner li.cat-header::before { content: none; }
 
 /* ---------- Profile (Conóceme) ---------- */
 .profile {
