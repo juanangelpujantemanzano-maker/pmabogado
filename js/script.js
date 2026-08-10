@@ -7,17 +7,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function openPanel(item) {
+    var panel = item.querySelector(".accordion-panel");
+    item.classList.add("open");
+    panel.style.maxHeight = panel.scrollHeight + "px";
+  }
+  function closePanel(item) {
+    var panel = item.querySelector(".accordion-panel");
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        panel.style.maxHeight = "0px";
+      });
+    });
+    item.classList.remove("open");
+  }
+
   document.querySelectorAll(".accordion-item").forEach(function (item) {
     var header = item.querySelector(".accordion-header");
+    var panel = item.querySelector(".accordion-panel");
     header.addEventListener("click", function () {
-      item.classList.toggle("open");
+      if (item.classList.contains("open")) {
+        closePanel(item);
+      } else {
+        openPanel(item);
+      }
+    });
+    panel.addEventListener("transitionend", function (e) {
+      if (e.propertyName === "max-height" && item.classList.contains("open")) {
+        panel.style.maxHeight = "none";
+      }
+    });
+    window.addEventListener("resize", function () {
+      if (item.classList.contains("open") && panel.style.maxHeight !== "none") {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
     });
   });
 
   // Open only the item matching the URL hash, if any; otherwise leave all closed
   var target = window.location.hash ? document.querySelector(window.location.hash) : null;
   if (target && target.classList.contains("accordion-item")) {
-    target.classList.add("open");
+    openPanel(target);
     setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 100);
   }
 
