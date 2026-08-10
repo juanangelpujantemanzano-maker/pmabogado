@@ -323,7 +323,6 @@ section.alt { background: var(--gray-50); }
   overflow: hidden;
   transition: max-height 0.28s ease;
 }
-.accordion-item.open .accordion-panel { max-height: 20000px; }
 .accordion-panel-inner { padding: 0 4px 26px; }
 .accordion-panel-inner ul {
   columns: 2;
@@ -354,12 +353,11 @@ section.alt { background: var(--gray-50); }
   background: var(--gold);
 }
 .accordion-panel-inner .cat-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  columns: 2;
   column-gap: 40px;
-  align-items: start;
 }
 .accordion-panel-inner .cat-group {
+  break-inside: avoid;
   margin-bottom: 2px;
 }
 .accordion-panel-inner .cat-group .cat-header {
