@@ -353,11 +353,14 @@ section.alt { background: var(--gray-50); }
   background: var(--gold);
 }
 .accordion-panel-inner .cat-columns {
-  columns: 2;
-  column-gap: 40px;
+  display: flex;
+  gap: 0 40px;
+}
+.accordion-panel-inner .cat-col {
+  flex: 1;
+  min-width: 0;
 }
 .accordion-panel-inner .cat-group {
-  break-inside: avoid;
   margin-bottom: 2px;
 }
 .accordion-panel-inner .cat-group .cat-header {
@@ -366,6 +369,7 @@ section.alt { background: var(--gray-50); }
   font-size: 0.94rem;
   margin: 16px 0 4px;
 }
+.accordion-panel-inner .cat-group:first-child .cat-header { margin-top: 0; }
 .accordion-panel-inner .cat-group ul {
   columns: 1;
 }
@@ -1144,7 +1148,7 @@ footer.site-footer a:hover { color: var(--gold); }
   .grid-3, .grid-2, .contact-grid, .profile, footer.site-footer .grid { grid-template-columns: 1fr; }
   .profile .photo { max-width: 280px; }
   .accordion-panel-inner ul { columns: 1; }
-  .accordion-panel-inner .cat-columns { grid-template-columns: 1fr; }
+  .accordion-panel-inner .cat-columns { flex-direction: column; gap: 0; }
   .topbar .container { justify-content: center; text-align: center; }
   .whatsapp-float { width: 50px; height: 50px; right: 16px; bottom: 16px; }
 }
