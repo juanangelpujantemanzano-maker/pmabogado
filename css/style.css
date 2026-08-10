@@ -323,7 +323,7 @@ section.alt { background: var(--gray-50); }
   overflow: hidden;
   transition: max-height 0.28s ease;
 }
-.accordion-item.open .accordion-panel { max-height: 2400px; }
+.accordion-item.open .accordion-panel { max-height: 20000px; }
 .accordion-panel-inner { padding: 0 4px 26px; }
 .accordion-panel-inner ul {
   columns: 2;
@@ -353,13 +353,24 @@ section.alt { background: var(--gray-50); }
   height: 6px;
   background: var(--gold);
 }
-.accordion-panel-inner li.cat-header {
-  padding-left: 0;
-  padding-top: 16px;
+.accordion-panel-inner .cat-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  align-items: start;
+}
+.accordion-panel-inner .cat-group {
+  margin-bottom: 2px;
+}
+.accordion-panel-inner .cat-group .cat-header {
   font-weight: 700;
   color: var(--navy);
+  font-size: 0.94rem;
+  margin: 16px 0 4px;
 }
-.accordion-panel-inner li.cat-header::before { content: none; }
+.accordion-panel-inner .cat-group ul {
+  columns: 1;
+}
 
 /* ---------- Profile (Conóceme) ---------- */
 .profile {
@@ -1135,6 +1146,7 @@ footer.site-footer a:hover { color: var(--gold); }
   .grid-3, .grid-2, .contact-grid, .profile, footer.site-footer .grid { grid-template-columns: 1fr; }
   .profile .photo { max-width: 280px; }
   .accordion-panel-inner ul { columns: 1; }
+  .accordion-panel-inner .cat-columns { grid-template-columns: 1fr; }
   .topbar .container { justify-content: center; text-align: center; }
   .whatsapp-float { width: 50px; height: 50px; right: 16px; bottom: 16px; }
 }
