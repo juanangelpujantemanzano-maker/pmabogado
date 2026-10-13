@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de indemnización por despido | Pujante Manzano Abogado</title>
+<meta name="description" content="Calcula la indemnización por despido improcedente u objetivo según tu antigüedad y tu salario, gratis y en tu propio navegador.">
+<link rel="canonical" href="https://pmabogado.es/simulador-despido.html">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a>
+    <a href="tel:+34666444493">666 44 44 93</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <img src="images/logo.png" alt="PM Abogado" class="brand-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="sobre-el-despacho.html">Sobre el Despacho</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="herramientas.html" class="active">Herramientas</a></li>
+        <li><a href="modelos.html">Modelos</a></li>
+        <li><a href="libros.html">Libros</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding: 60px 0 70px;">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="videos/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container" style="position: relative; z-index: 2;">
+    <span class="eyebrow"><a href="herramientas.html" style="color: var(--gold);">Herramientas</a> · Simulador de despido</span>
+    <h1>Simulador de indemnización por despido</h1>
+    <p class="lead">Calcula la indemnización que te correspondería por un despido improcedente u objetivo según tu antigüedad y tu salario.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 960px;">
+
+    <div class="tool-box">
+      <form id="despForm" class="form-box" style="background: transparent; border: none; padding: 0;">
+        <label for="tipo">Tipo de despido</label>
+        <select id="tipo" required>
+          <option value="improcedente">Despido improcedente</option>
+          <option value="objetivo">Despido objetivo o colectivo (causas económicas, técnicas, organizativas o de producción)</option>
+        </select>
+
+        <label for="inicio">Fecha de inicio de la relación laboral</label>
+        <input type="date" id="inicio" required>
+
+        <label for="fin">Fecha del despido</label>
+        <input type="date" id="fin" required>
+
+        <label for="salario">Salario bruto anual (€), incluidas pagas extra y pluses habituales</label>
+        <input type="number" id="salario" min="0" step="0.01" placeholder="Ej. 24000" required>
+
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      <div id="status" class="tool-status" style="display:none;"></div>
+
+      <div id="resultBox" class="tool-result" style="display:none; flex-direction: column; align-items: stretch;">
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.96rem; color: var(--navy);">
+          <p style="margin: 4px 0;">Antigüedad computada: <strong id="antigOut"></strong></p>
+          <p style="margin: 4px 0;">Salario diario: <strong id="diarioOut"></strong></p>
+          <p style="margin: 4px 0;">Días de indemnización: <strong id="diasOut"></strong></p>
+          <p style="margin: 4px 0; font-size: 1.1rem;">Indemnización estimada (bruta): <strong id="importeOut"></strong></p>
+        </div>
+        <p id="noteOut" style="margin-top: 14px;"></p>
+        <div style="overflow-x: auto; margin-top: 12px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tramo</th>
+                <th>Tiempo computado</th>
+                <th>Días</th>
+                <th>Importe</th>
+              </tr>
+            </thead>
+            <tbody id="resultTableBody"></tbody>
+          </table>
+        </div>
+        <div style="margin-top: 18px; padding: 14px 18px; text-align: justify; background: #fff8e6; border: 1px solid #e6d7a8; border-radius: 4px;">
+          <strong>Importante: el plazo para impugnar un despido es de 20 días hábiles</strong> desde que se produce. Si ha pasado ese plazo, la acción puede caducar, por lo que conviene consultar el caso cuanto antes.
+        </div>
+        <button type="button" id="resetBtn" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy); margin-top: 20px; align-self: flex-start;">Nuevo cálculo</button>
+      </div>
+    </div>
+
+    <div id="ctaBox" style="margin-top: 28px; padding: 22px 24px; border-left: 4px solid var(--gold); background: #f7f5ef;">
+      <h4 style="margin-top: 0;">¿Te han despedido?</h4>
+      <p style="margin-bottom: 16px;">Podemos revisar tu carta de despido, valorar si es improcedente o nulo y reclamar lo que te corresponde antes de que venza el plazo.</p>
+      <a href="contacto.html" class="btn btn-primary">Solicitar consulta</a>
+      <a href="https://wa.me/34666444493" target="_blank" rel="noopener" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy); margin-left: 8px;">Escribir por WhatsApp</a>
+    </div>
+
+    <div class="tool-disclaimer">
+      <h4>Sobre esta herramienta</h4>
+      <p>El simulador aplica las reglas generales del Estatuto de los Trabajadores: en el despido improcedente, 33 días de salario por año de servicio (45 días por el período anterior al 12 de febrero de 2012) con un máximo de 24 mensualidades, y en el despido objetivo, 20 días por año con un máximo de 12 mensualidades. El salario diario se calcula dividiendo el salario bruto anual entre 365. Los períodos inferiores a un año se prorratean por meses y la fracción de mes se cuenta como mes completo, criterio habitual que el juzgado puede aplicar de otro modo.</p>
+      <p>No tiene en cuenta convenios colectivos o contratos con mejoras, indemnizaciones pactadas, salarios de tramitación, despidos nulos o con readmisión, contratos temporales, de alta dirección o con regímenes especiales, ni el prorrateo de cada concepto salarial. El resultado es orientativo y no sustituye al estudio del caso concreto.</p>
+      <p>Todo el cálculo se realiza <strong>íntegramente en tu navegador</strong>: los datos introducidos no se envían a ningún servidor.</p>
+      <p>Esta herramienta tiene carácter meramente informativo y no constituye asesoramiento legal.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <video class="footer-bg-video" autoplay muted loop playsinline>
+    <source src="videos/footer-bg.mp4" type="video/mp4">
+  </video>
+  <div class="footer-overlay"></div>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="sobre-el-despacho.html">Sobre el Despacho</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="herramientas.html">Herramientas</a></li>
+          <li><a href="modelos.html">Modelos</a></li>
+          <li><a href="libros.html">Libros</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a></li>
+          <li><a href="tel:+34666444493">666 44 44 93</a></li>
+          <li><a href="https://www.instagram.com/pujantemanzano_abogado/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://wa.me/34666444493" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Pujante Manzano Abogado. Todos los derechos reservados.</span>
+      <span><a href="aviso-legal.html">Aviso legal</a><a href="politica-privacidad.html">Política de privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/simulador-despido.js"></script>
+</body>
+</html>

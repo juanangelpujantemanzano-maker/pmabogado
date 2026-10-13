@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de hipoteca | Pujante Manzano Abogado</title>
+<meta name="description" content="Calcula la cuota de tu hipoteca, los intereses totales y compara dos tipos de interés, gratis y en tu propio navegador.">
+<link rel="canonical" href="https://pmabogado.es/simulador-hipoteca.html">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a>
+    <a href="tel:+34666444493">666 44 44 93</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html">
+      <img src="images/logo.png" alt="PM Abogado" class="brand-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="sobre-el-despacho.html">Sobre el Despacho</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="herramientas.html" class="active">Herramientas</a></li>
+        <li><a href="modelos.html">Modelos</a></li>
+        <li><a href="libros.html">Libros</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding: 60px 0 70px;">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="videos/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container" style="position: relative; z-index: 2;">
+    <span class="eyebrow"><a href="herramientas.html" style="color: var(--gold);">Herramientas</a> · Simulador de hipoteca</span>
+    <h1>Simulador de hipoteca</h1>
+    <p class="lead">Calcula la cuota mensual, los intereses totales y el coste final de tu hipoteca, y compara dos tipos de interés.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 960px;">
+
+    <div class="tool-box">
+      <form id="hipForm" class="form-box" style="background: transparent; border: none; padding: 0;">
+        <label for="importe">Importe del préstamo (€)</label>
+        <input type="number" id="importe" min="0" step="0.01" placeholder="Ej. 150000" required>
+
+        <label for="plazo">Plazo (años)</label>
+        <input type="number" id="plazo" min="1" max="50" step="1" placeholder="Ej. 30" required>
+
+        <label for="tinA">Tipo de interés anual A (%)</label>
+        <input type="number" id="tinA" min="0" step="0.01" placeholder="Ej. 3,2" required>
+
+        <label for="tinB">Tipo de interés anual B para comparar (%, opcional)</label>
+        <input type="number" id="tinB" min="0" step="0.01" placeholder="Ej. 2,6">
+
+        <label for="comision">Comisión de apertura (% del capital, opcional)</label>
+        <input type="number" id="comision" min="0" step="0.01" placeholder="Ej. 0,5">
+
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+
+      <div id="status" class="tool-status" style="display:none;"></div>
+
+      <div id="resultBox" class="tool-result" style="display:none; flex-direction: column; align-items: stretch;">
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.96rem; color: var(--navy);">
+          <p style="margin: 4px 0;">Cuota mensual (tipo A): <strong id="cuotaOut"></strong></p>
+          <p style="margin: 4px 0;">Total de intereses: <strong id="intOut"></strong></p>
+          <p style="margin: 4px 0;">Total a pagar (capital, intereses y comisión): <strong id="totalOut"></strong></p>
+          <p style="margin: 4px 0;">Los intereses suponen: <strong id="ratioOut"></strong></p>
+        </div>
+        <p id="cmpBox" style="display:none; margin-top: 16px;"></p>
+        <div style="overflow-x: auto; margin-top: 18px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Año</th>
+                <th>Pagado</th>
+                <th>Intereses</th>
+                <th>Capital amortizado</th>
+                <th>Capital pendiente</th>
+              </tr>
+            </thead>
+            <tbody id="resultTableBody"></tbody>
+          </table>
+        </div>
+        <button type="button" id="resetBtn" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy); margin-top: 20px; align-self: flex-start;">Nueva simulación</button>
+      </div>
+    </div>
+
+    <div id="ctaBox" style="margin-top: 28px; padding: 22px 24px; border-left: 4px solid var(--gold); background: #f7f5ef;">
+      <h4 style="margin-top: 0;">¿Tienes o vas a firmar una hipoteca?</h4>
+      <p style="margin-bottom: 16px;">Podemos revisar tu escritura y detectar cláusulas abusivas (suelo, IRPH, gastos o vencimiento anticipado) o comprobar el contrato antes de firmar.</p>
+      <a href="contacto.html" class="btn btn-primary">Solicitar consulta</a>
+      <a href="https://wa.me/34666444493" target="_blank" rel="noopener" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy); margin-left: 8px;">Escribir por WhatsApp</a>
+    </div>
+
+    <div class="tool-disclaimer">
+      <h4>Sobre esta herramienta</h4>
+      <p>El simulador calcula la cuota con el sistema de amortización francés (cuota constante) y un tipo de interés fijo durante todo el plazo. Si tu hipoteca es variable, el resultado cambiará cuando se revise el tipo, por lo que debes tomarlo como una referencia. No incluye seguros, impuestos ni otros gastos vinculados.</p>
+      <p>Todo el cálculo se realiza <strong>íntegramente en tu navegador</strong>: los datos introducidos no se envían a ningún servidor.</p>
+      <p>Esta herramienta tiene carácter meramente informativo y no constituye asesoramiento legal ni financiero.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <video class="footer-bg-video" autoplay muted loop playsinline>
+    <source src="videos/footer-bg.mp4" type="video/mp4">
+  </video>
+  <div class="footer-overlay"></div>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="sobre-el-despacho.html">Sobre el Despacho</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="herramientas.html">Herramientas</a></li>
+          <li><a href="modelos.html">Modelos</a></li>
+          <li><a href="libros.html">Libros</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:juanangel.pujantemanzano@gmail.com">juanangel.pujantemanzano@gmail.com</a></li>
+          <li><a href="tel:+34666444493">666 44 44 93</a></li>
+          <li><a href="https://www.instagram.com/pujantemanzano_abogado/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://wa.me/34666444493" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Pujante Manzano Abogado. Todos los derechos reservados.</span>
+      <span><a href="aviso-legal.html">Aviso legal</a><a href="politica-privacidad.html">Política de privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/simulador-hipoteca.js"></script>
+</body>
+</html>
