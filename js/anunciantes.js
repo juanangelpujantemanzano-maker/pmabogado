@@ -176,6 +176,7 @@
     globe.visible = !on; glow.visible = !on; plane.visible = on;
     if (on) { globeZ = camera.position.z; camera.position.set(0, 0, zFit()); }
     else { camera.position.set(0, 0, globeZ); }
+    btnPausa.style.display = on ? 'none' : '';
     btnVista.textContent = on ? '3D' : '2D';
     btnVista.setAttribute('aria-label', on ? 'Ver esfera' : 'Ver plano'); btnVista.title = on ? 'Ver esfera' : 'Ver plano';
     wrap.querySelector('.globo-aviso').textContent = on ? 'Arrastra para mover · rueda o botones para el zoom · pulsa un bloque para abrirlo' : 'Arrastra para girar · rueda o botones para el zoom · pulsa un bloque para abrirlo';
@@ -247,8 +248,43 @@
     dom.style.cursor = selMode ? 'crosshair' : 'grab';
     msg.textContent = selMode ? 'Arrastra sobre bloques libres para elegir un grupo; pulsa un bloque para elegir solo uno. Para mover la vista, sal de la selección.' : '';
   };
+  var paused = false, btnPausa = document.getElementById('pausaBtn');
+  btnPausa.onclick = function () {
+    paused = !paused; btnPausa.textContent = paused ? '▶' : '⏸';
+    btnPausa.setAttribute('aria-label', paused ? 'Reanudar giro' : 'Detener giro'); btnPausa.title = paused ? 'Reanudar giro' : 'Detener giro';
+  };
   var dom = renderer.domElement;
   dom.style.touchAction = 'none'; dom.style.cursor = 'grab';
+  /* pellizco con dos dedos para el zoom (en fase de captura: anula el arrastre normal mientras dura) */
+  var ptrs = {}, pinch = false, pinchD = 0;
+  function nPtr() { return Object.keys(ptrs).length; }
+  function pDist() { var k = Object.keys(ptrs), a = ptrs[k[0]], b = ptrs[k[1]]; return Math.hypot(a.x - b.x, a.y - b.y); }
+  dom.addEventListener('pointerdown', function (e) {
+    ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+    if (nPtr() >= 2) {
+      pinch = true; pinchD = pDist(); dragging = false; moved = 99; tip.style.display = 'none';
+      if (selDrag) { selDrag = false; selRect = null; updateSel(); }
+      e.stopImmediatePropagation();
+    }
+  }, true);
+  dom.addEventListener('pointermove', function (e) {
+    if (ptrs[e.pointerId]) { ptrs[e.pointerId].x = e.clientX; ptrs[e.pointerId].y = e.clientY; }
+    if (pinch) {
+      if (nPtr() >= 2) {
+        var nd = pDist();
+        if (pinchD > 0 && nd > 0) { camera.position.z = Math.max(zMin(), Math.min(zMax(), camera.position.z * pinchD / nd)); if (flat) clampPan(); }
+        pinchD = nd;
+      }
+      e.stopImmediatePropagation();
+    }
+  }, true);
+  function endPtr(e) {
+    delete ptrs[e.pointerId];
+    if (pinch) { e.stopImmediatePropagation(); if (nPtr() < 2) pinch = false; if (nPtr() === 0) { dragging = false; selDrag = false; } }
+  }
+  dom.addEventListener('pointerup', endPtr, true);
+  dom.addEventListener('pointercancel', endPtr, true);
+  dom.addEventListener('pointerleave', function (e) { if (e.pointerType === 'touch') delete ptrs[e.pointerId]; }, true);
   dom.addEventListener('pointerdown', function (e) {
     if (selMode) { var p0 = pick(e); if (p0 && forSale(p0.c, p0.f)) { selDrag = true; selStart = p0; selRect = rectOf(p0, p0); updateSel(); dom.setPointerCapture(e.pointerId); } return; }
     dragging = true; moved = 0; lx = e.clientX; ly = e.clientY; target = null; dom.setPointerCapture(e.pointerId); dom.style.cursor = 'grabbing'; });
@@ -415,7 +451,7 @@
       globe.rotation.y += norm(target.y - globe.rotation.y) * 0.08;
       globe.rotation.x += (target.x - globe.rotation.x) * 0.08;
       if (Math.abs(norm(target.y - globe.rotation.y)) < 0.002 && Math.abs(target.x - globe.rotation.x) < 0.002) target = null;
-    } else if (!flat && !dragging && !selMode && !hoverBlock && !rotDir) {
+    } else if (!flat && !dragging && !selMode && !hoverBlock && !rotDir && !paused && !pinch) {
       globe.rotation.y += 0.0014;
       if (over && lastPt && (++hoverTick % 4 === 0)) applyHover(lastPt);
     }
