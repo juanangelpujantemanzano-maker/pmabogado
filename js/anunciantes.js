@@ -248,9 +248,12 @@
     dom.style.cursor = selMode ? 'crosshair' : 'grab';
     msg.textContent = selMode ? 'Arrastra sobre bloques libres para elegir un grupo; pulsa un bloque para elegir solo uno. Para mover la vista, sal de la selección.' : '';
   };
+  var ICO_PAUSE = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="display:block;margin:auto"><rect x="6" y="5" width="4" height="14" fill="#fff"/><rect x="14" y="5" width="4" height="14" fill="#fff"/></svg>';
+  var ICO_PLAY = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="display:block;margin:auto"><path d="M7 4.5v15l12-7.5z" fill="#fff"/></svg>';
   var paused = false, btnPausa = document.getElementById('pausaBtn');
+  btnPausa.innerHTML = ICO_PAUSE;
   btnPausa.onclick = function () {
-    paused = !paused; btnPausa.textContent = paused ? '▶' : '⏸';
+    paused = !paused; btnPausa.innerHTML = paused ? ICO_PLAY : ICO_PAUSE;
     btnPausa.setAttribute('aria-label', paused ? 'Reanudar giro' : 'Detener giro'); btnPausa.title = paused ? 'Reanudar giro' : 'Detener giro';
   };
   var dom = renderer.domElement;
