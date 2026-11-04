@@ -91,7 +91,6 @@
     <div class="busca">
       <input id="buscaInput" type="text" placeholder="Bloque (ej. 80-20), anunciante o ciudad" aria-label="Buscar en el globo">
       <button type="button" class="btn btn-primary" id="buscaBtn">Buscar</button>
-      <button type="button" class="btn btn-outline" id="selBtn" style="border-color: var(--navy); color: var(--navy);">Seleccionar bloques</button>
       <button type="button" class="btn btn-outline" id="buscaLimpiar" style="border-color: var(--navy); color: var(--navy);">Limpiar</button>
     </div>
     <p class="busca-msg" id="buscaMsg" role="status"></p>
@@ -102,6 +101,8 @@
       <div class="globo-pad" aria-label="Girar el globo"><button type="button" data-d="u" aria-label="Girar hacia arriba">▲</button><button type="button" data-d="l" aria-label="Girar a la izquierda">◀</button><button type="button" data-d="d" aria-label="Girar hacia abajo">▼</button><button type="button" data-d="r" aria-label="Girar a la derecha">▶</button></div>
       <div class="globo-aviso">Arrastra para girar · rueda o botones para el zoom · pulsa un bloque para abrirlo</div>
     </div>
+
+    <div style="max-width: 860px; margin: 14px auto 0; text-align: center;"><button type="button" class="btn btn-outline" id="selBtn" style="border-color: var(--navy); color: var(--navy);">Seleccionar bloques</button></div>
 
     <div class="sel-info" id="selInfo" style="display:none;" role="status"></div>
 
