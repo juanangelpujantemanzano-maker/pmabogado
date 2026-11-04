@@ -303,7 +303,7 @@
         var perPx = 2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360) / dom.clientHeight;
         camera.position.x -= dx * perPx; camera.position.y += dy * perPx; clampPan();
       } else {
-        var k = 0.0055 * camera.position.z / 3.1;
+        var k = 0.0055 * Math.max(0.12, (camera.position.z - 1) / 2.1);
         globe.rotation.y += dx * k; globe.rotation.x = Math.max(-1.3, Math.min(1.3, globe.rotation.x + dy * k));
       }
       tip.style.display = 'none';
@@ -345,6 +345,12 @@
       h += '<p class="ficha-meta">' + esc(a.ciudad) + ' · ' + n.toLocaleString('es-ES') + (n === 1 ? ' bloque' : ' bloques') + ' (' + (n * CFG.pixelesPorBloque).toLocaleString('es-ES') + ' píxeles)</p>';
       if (a.hasta) { var dr = diasRest(a); h += '<p class="ficha-meta">' + (a.desde ? 'Publicado el ' + fd(a.desde) + ' · ' : '') + 'Vigente hasta el ' + fd(a.hasta) + ' (' + (dr > 1 ? 'quedan ' + dr + ' días' : dr === 1 ? 'queda 1 día' : 'último día') + ')' + (esNuevo(a) ? ' · <strong style="color:#8a6200">Nuevo</strong>' : '') + '</p>'; }
       h += '<p>' + esc(a.descripcion) + '</p>';
+      if (a.telefono || a.correo) {
+        h += '<p style="line-height:1.8;margin:6px 0 10px">';
+        if (a.telefono) h += '<strong>Teléfono:</strong> <a href="tel:' + esc(a.telefono.replace(/[^+\d]/g, '')) + '">' + esc(a.telefono) + '</a><br>';
+        if (a.correo) h += '<strong>Correo:</strong> <a href="mailto:' + esc(a.correo) + '">' + esc(a.correo) + '</a>';
+        h += '</p>';
+      }
       h += '<p><a class="btn btn-primary" href="' + esc(a.url) + '" target="_blank" rel="sponsored nofollow noopener">Visitar web</a></p>';
       if (a.slug) h += '<p style="font-size:0.85rem;margin:0"><button type="button" class="btn btn-outline" id="copiarEnlace" style="border-color:var(--navy);color:var(--navy);padding:6px 12px;font-size:0.85rem">Copiar enlace directo</button> <span id="copiarMsg" style="color:#1d4e89"></span></p>';
     } else {
@@ -443,7 +449,9 @@
       globe.rotation.y += dx * k; globe.rotation.x = Math.max(-1.3, Math.min(1.3, globe.rotation.x + dy * k));
     }
   }
+  var seasonTick = null;
   function loop() {
+    if (seasonTick) seasonTick();
     for (var si = 0; si < sats.length; si++) { var st = sats[si]; st.a += st.w * 0.004; st.s.position.set(Math.cos(st.a) * st.r, 0, Math.sin(st.a) * st.r); st.halo.material.opacity = 0.2 + 0.2 * Math.sin(Date.now() / 400 + si * 2); st.orbit.visible = !flat; }
     nuevoMat.opacity = 0.12 + 0.38 * (0.5 + 0.5 * Math.sin(Date.now() / 320));
     if (rotDir) { applyRot(); }
@@ -554,6 +562,88 @@
     msg.textContent = d.a ? d.a.nombre + ' (' + d.a.ciudad + ').' : 'Bloque ' + label(c, f) + ': libre.';
     setTimeout(function () { openFicha(d); }, 1400);
     var gb = document.getElementById('globo'); if (gb && gb.scrollIntoView) gb.scrollIntoView({ block: 'center' });
+  })();
+
+  /* ---------- temporadas: Navidad, Nochevieja y aurora de invierno ---------- */
+  (function () {
+    if (CFG.temporadas === false) return;
+    var theme = new URLSearchParams(location.search).get('tema');
+    if (!theme) {
+      var dn = new Date(), m = dn.getMonth() + 1, dd = dn.getDate();
+      if ((m === 12 && dd === 31) || (m === 1 && dd === 1)) theme = 'nochevieja';
+      else if ((m === 12 && dd >= 8) || (m === 1 && dd <= 6)) theme = 'navidad';
+      else if ((m === 1 && dd > 6) || m === 2 || (m === 3 && dd <= 20)) theme = 'aurora';
+    }
+    if (theme !== 'navidad' && theme !== 'nochevieja' && theme !== 'aurora') return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cv = document.createElement('canvas');
+    cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;';
+    wrap.appendChild(cv);
+    var cx = cv.getContext('2d'), sw = 0, sh = 0, flakes = [], bursts = [], nextB = 400, last = performance.now();
+    function build() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      sw = wrap.clientWidth; sh = wrap.clientHeight; cv.width = sw * dpr; cv.height = sh * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      flakes = [];
+      if (theme === 'navidad') for (var i = 0, n = Math.round(sw * sh / 7000); i < n; i++) flakes.push({ x: Math.random() * sw, y: Math.random() * sh, r: Math.random() * 2.2 + 0.8, v: Math.random() * 28 + 18, ph: Math.random() * 6.28, a: Math.random() * 0.5 + 0.4 });
+    }
+    build(); window.addEventListener('resize', build);
+    var COLS_F = ['255,90,90', '255,211,107', '120,230,150', '110,180,255', '255,150,230', '255,255,255'];
+    function boom() {
+      var x = sw * (0.15 + Math.random() * 0.7), y = sh * (0.1 + Math.random() * 0.45), col = COLS_F[Math.floor(Math.random() * COLS_F.length)], ps = [], n = 70;
+      for (var i = 0; i < n; i++) { var an = i / n * 6.283 + Math.random() * 0.1, sp = 70 + Math.random() * 110; ps.push({ x: x, y: y, vx: Math.cos(an) * sp, vy: Math.sin(an) * sp }); }
+      bursts.push({ ps: ps, life: 0, col: col });
+    }
+    function frame(now) {
+      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      cx.clearRect(0, 0, sw, sh);
+      if (!reduce) {
+        if (theme === 'navidad') {
+          cx.fillStyle = '#fff';
+          for (var i = 0; i < flakes.length; i++) {
+            var f = flakes[i]; f.y += f.v * dt; f.x += Math.sin(now / 1200 + f.ph) * 12 * dt;
+            if (f.y > sh + 4) { f.y = -4; f.x = Math.random() * sw; }
+            cx.globalAlpha = f.a; cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 6.283); cx.fill();
+          }
+          cx.globalAlpha = 1;
+        } else if (theme === 'nochevieja') {
+          nextB -= dt * 1000; if (nextB <= 0) { boom(); nextB = 500 + Math.random() * 1100; }
+          cx.globalCompositeOperation = 'lighter'; cx.lineCap = 'round';
+          for (var b = bursts.length - 1; b >= 0; b--) {
+            var bu = bursts[b]; bu.life += dt; if (bu.life > 1.9) { bursts.splice(b, 1); continue; }
+            var al = Math.max(0, 1 - bu.life / 1.9);
+            cx.strokeStyle = 'rgba(' + bu.col + ',' + al + ')'; cx.lineWidth = 2;
+            for (var p = 0; p < bu.ps.length; p++) {
+              var q = bu.ps[p], ox = q.x, oy = q.y; q.vy += 60 * dt; q.vx *= 0.985; q.vy *= 0.985; q.x += q.vx * dt; q.y += q.vy * dt;
+              cx.beginPath(); cx.moveTo(ox, oy); cx.lineTo(q.x, q.y); cx.stroke();
+            }
+          }
+          cx.globalCompositeOperation = 'source-over';
+        } else {
+          var g = cx.createLinearGradient(0, 0, 0, sh * 0.5); g.addColorStop(0, 'rgba(90,255,190,0.55)'); g.addColorStop(0.5, 'rgba(70,170,255,0.25)'); g.addColorStop(1, 'rgba(150,90,255,0)');
+          cx.globalCompositeOperation = 'lighter'; cx.fillStyle = g;
+          for (var x = 0; x < sw; x += 6) {
+            cx.globalAlpha = Math.max(0, 0.10 + 0.20 * Math.sin(x * 0.012 + now / 1600) * Math.sin(x * 0.005 - now / 2300));
+            var hh = sh * (0.28 + 0.14 * Math.sin(x * 0.009 + now / 1900));
+            cx.fillRect(x, 0, 6, hh);
+          }
+          cx.globalAlpha = 1; cx.globalCompositeOperation = 'source-over';
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    /* guirnalda de luces alrededor del globo (Navidad) */
+    if (theme === 'navidad') {
+      var gar = new THREE.Group(); gar.rotation.set(0.55, 0, 0.25); scene.add(gar);
+      var LC = [0xff4d4d, 0xffd36b, 0x4be07a, 0x66b3ff], lights = [], N = 44;
+      for (var i = 0; i < N; i++) {
+        var th = i / N * Math.PI * 2, rr = 1.1 + Math.sin(th * 6) * 0.025;
+        var bulb = new THREE.Mesh(new THREE.SphereGeometry(0.015, 10, 8), new THREE.MeshBasicMaterial({ color: LC[i % 4] }));
+        var halo = new THREE.Mesh(new THREE.SphereGeometry(0.04, 10, 8), new THREE.MeshBasicMaterial({ color: LC[i % 4], transparent: true, opacity: 0.3, depthWrite: false }));
+        bulb.add(halo); bulb.position.set(Math.cos(th) * rr, Math.sin(th * 6) * 0.04, Math.sin(th) * rr); gar.add(bulb); lights.push(halo);
+      }
+      seasonTick = function () { gar.visible = !flat; gar.rotation.y += 0.0015; var tm = Date.now() / 260; for (var k = 0; k < lights.length; k++) lights[k].material.opacity = 0.12 + 0.4 * (0.5 + 0.5 * Math.sin(tm + k * 1.7)); };
+    }
   })();
 
   resize(); loop();
